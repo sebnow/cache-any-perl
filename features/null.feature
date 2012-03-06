@@ -36,3 +36,4 @@ Feature: Cache without an adapter
 		And I replace "foo" with the value "bar" in the cache
 		Then it should fail
 		And the key "foo" should not exist
+

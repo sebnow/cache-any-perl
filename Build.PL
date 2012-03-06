@@ -21,6 +21,7 @@ my $builder = Module::Build->new(
 	add_to_cleanup => ['Cache-Any-*'],
 	create_readme => 1,
 	recursive_test_files => 1,
+	repository => 'git://github.com/sebnow/cache-any-perl.git',
 );
 
 $builder->create_build_script();
