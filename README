@@ -1,0 +1,41 @@
+NAME
+    Cache::Any - Lightweight interface for caching
+
+SYNOPSIS
+            package Foo;
+            use Cache::Any qw($cache);
+
+DESCRIPTION
+    "Cache::Any" allows modules to efficiently and simply cache, while
+    letting applications choose a caching mechanism such as Memcached or
+    CHI.
+
+    "Cache::Any" has a very tiny footprint and no dependencies beyond Perl
+    5.6, which makes it appropriate for even small modules to use. It
+    defaults to 'null' logging activity, so a module can safely log without
+    worrying about whether the application has chosen (or will ever choose)
+    a caching mechanism.
+
+INSPIRATION
+    "Cache::Any" is heavily influenced by Log::Any. The concept is
+    identical; provide a lightweight interface with for modules, allowing
+    applications to specify the backend.
+
+MOTIVATION
+    There are many caching interfaces, with the predominant ones being CHI
+    and Cache::Cache, however they do more than just provide an interface.
+    They implement some caching logic such as expiration times or
+    serialisation. Some of them also have many dependencies which can be
+    heavy (e.g. CHI depends on Moose).
+
+    "Cache::Any" aims to provide the thinnest possible interface and
+    delegates all the heavy lifting to the caching mechanism. This may be at
+    the cost of flexibility, but if that is a requirement then CHI or
+    Cache::Cache can be used instead.
+
+SEE ALSO
+    CHI, Cache::Cache, Log::Any
+
+AUTHORS
+    Sebastian Nowicki <sebnow@gmail.com>
+
