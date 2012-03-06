@@ -1,0 +1,8 @@
+/Build
+/MANIFEST*
+/META*
+/MYMETA*
+/Cache-Any-*
+/_build
+/blib
+/pod2*
