@@ -2,7 +2,35 @@ package Cache::Any;
 use strict;
 use warnings;
 
+require Cache::Any::Adapter::Null;
+
 our $VERSION = v0.1.0;
+
+sub import {
+	my $class = shift;
+	my $param = shift;
+	if(defined($param)) {
+		if($param eq '$cache') {
+			my $caller = caller();
+			my $cache = $class->get_cache('namespace' => $caller);
+			no strict 'refs';
+			my $var = "${caller}::cache";
+			*$var = \$cache;
+		} else {
+			die("invalid import '$param' - must be '\$cache'");
+		}
+	}
+}
+
+sub get_cache {
+	my ($self, %args) = @_;
+	my $namespace = delete($args{'namespace'}) || caller();
+	if($Cache::Any::Adapter::INITIALIZED) {
+		return Cache::Any::Adapter->get_cache($namespace, %args);
+	} else {
+		return Cache::Any::Adapter::Null->new();
+	}
+}
 
 1;
 
