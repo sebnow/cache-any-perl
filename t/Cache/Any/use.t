@@ -1,5 +1,11 @@
 #!/usr/bin/env perl
-use Test::More 'tests' => 1;
+use strict;
+use warnings;
 
-use_ok('Cache::Any');
+use Test::More tests => 2;
+
+BEGIN {
+	use_ok('Cache::Any');
+	use_ok('Cache::Any::Adapter::Null');
+};
 
