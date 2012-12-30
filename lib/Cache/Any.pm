@@ -5,6 +5,7 @@ use warnings;
 require Cache::Any::Adapter::Null;
 
 our $VERSION = v0.1.0;
+our %NullAdapters;
 
 sub import {
 	my $class = shift;
@@ -28,7 +29,8 @@ sub get_cache {
 	if($Cache::Any::Adapter::INITIALIZED) {
 		return Cache::Any::Adapter->get_cache($namespace, %args);
 	} else {
-		return Cache::Any::Adapter::Null->new();
+		$NullAdapters{$args{'namespace'}} ||= Cache::Any::Adapter::Null->new();
+		return $NullAdapters{$args{'namespace'}};
 	}
 }
 
