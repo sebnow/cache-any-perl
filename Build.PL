@@ -10,9 +10,6 @@ my $builder = Module::Build->new(
 		'Module::Build' => '',
 	},
 	build_requires => {
-		'File::Spec' => '',
-		'FindBin' => '',
-		'Test::BDD::Cucumber' => '',
 		'Test::More' => '',
 	},
 	requires => {
