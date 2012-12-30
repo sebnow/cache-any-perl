@@ -2,7 +2,7 @@ package Cache::Any;
 use strict;
 use warnings;
 
-require Cache::Any::Adapter::Null;
+use Cache::Any::Proxy;
 
 our $VERSION = v0.1.0;
 our %NullAdapters;
@@ -26,11 +26,21 @@ sub import {
 sub get_cache {
 	my ($self, %args) = @_;
 	my $namespace = delete($args{'namespace'}) || qr/.*/;
+	# The Cache::Any::Adapter module may not be imported at this point
+	# as it is not a strict dependency. This results in a 'once'
+	# warning. The check is to detect whether Cache::Any::Adapter has
+	# been imported.
+	no warnings 'once';
 	if($Cache::Any::Adapter::INITIALIZED) {
 		return Cache::Any::Adapter->get_cache($namespace, %args);
 	} else {
-		$NullAdapters{$args{'namespace'}} ||= Cache::Any::Adapter::Null->new();
-		return $NullAdapters{$args{'namespace'}};
+		if(!defined($NullAdapters{$namespace})) {
+			require Cache::Any::Adapter::Null;
+			my $adapter = Cache::Any::Adapter::Null->new();
+			$NullAdapters{$namespace} = Cache::Any::Proxy->new($adapter);
+		}
+
+		return $NullAdapters{$namespace};
 	}
 }
 

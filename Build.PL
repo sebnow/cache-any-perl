@@ -10,6 +10,7 @@ my $builder = Module::Build->new(
 		'Module::Build' => '',
 	},
 	build_requires => {
+		'Test::MockObject' => '',
 		'Test::More' => '',
 	},
 	requires => {
