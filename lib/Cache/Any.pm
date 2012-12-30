@@ -24,7 +24,7 @@ sub import {
 
 sub get_cache {
 	my ($self, %args) = @_;
-	my $namespace = delete($args{'namespace'}) || caller();
+	my $namespace = delete($args{'namespace'}) || qr/.*/;
 	if($Cache::Any::Adapter::INITIALIZED) {
 		return Cache::Any::Adapter->get_cache($namespace, %args);
 	} else {
